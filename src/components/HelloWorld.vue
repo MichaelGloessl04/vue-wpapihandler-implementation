@@ -1,27 +1,31 @@
 <template>
-  <h1 v-html="post_title"></h1>
-  <div v-html="post_content"></div>
+  <div class="container">
+    <h1>{{ post_title }}</h1>
+    <div class="post-content" v-html="post_content"></div>
+  </div>
 </template>
 
 <script>
-import { WPApiHandler } from 'wpapihandler';
+  import { WPApiHandler } from 'wpapihandler';
 
-const url = 'https://dev.htlweiz.at/wordpress';
-const headers = {
-  "Content-Type": "application/json",
-  "Authorization": "Basic dnVlX2pzOnJYaFcgbGg2cSB3dXV2IGQzQzUgSUtyWCBZTWtJ"
-};
+  const url = 'https://dev.htlweiz.at/wordpress';
+  const headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Basic d3BhcGloYW5kbGVyOm1vZ2tpOC1zYXp2eWotaHVjcVVi"
+  };
 
-const wpa = new WPApiHandler(url, headers);
-let connection = await wpa.get_posts(1550);
+  const wpa = new WPApiHandler(url, headers);
+  let post = await wpa.get_posts('1910');
 
-export default {
-  data () {
-    return {
-      post_title: connection.data.title.rendered,
-      post_content: connection.data.content.rendered,
-    }
-  }
+  console.log(post)
+
+  export default {
+    data () {
+      return {
+        post_title: post[0].title,
+        post_content: post[0].content,
+      }
+   }
 }
 </script>
 
